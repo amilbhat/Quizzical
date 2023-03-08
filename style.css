@@ -38,9 +38,10 @@
 /* Quiz Page */
 
 .quiz-main {
-    display: flex;               /* <----------------- */
+    display: none;               /* <----------------- */
     flex-direction: column;
     align-items: center;
+    padding: 2em 8em;
 }
 
 .quiz-question {
@@ -48,24 +49,35 @@
     font-weight: 700;
     color: #293264;
     margin-bottom: 1em;
+    margin-top: 1em;
 }
 
 .quiz-options {
+    padding: 0 2em;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1.5em;
 }
 
-.option {
-    font-size: 1rem;
-    padding: 0.3em 1em;
-    border-radius: 0.8em;
+
+/* .option {
+    position: absolute;
+    left: -9999px;
+} */
+
+.option-label {
     border: 2px solid #4D5B9E;
+    padding: 0.5em 2em;
+    margin-bottom: 5em;
+    border-radius: 2em;
+    font-weight: 600;
+    font-size: 0.8rem;
 }
 
-
-
-
+input[type=radio]:checked + label{
+    border: none;
+    background-color: #D6DBF5;
+    /* box-shadow: 0 0 3px 3px #4D5B9E; */
+}
 
 .answer-btn {
     font-size: 1rem;
@@ -75,4 +87,5 @@
     font-weight: 600;
     min-width: 50%;
     border-radius: 1em;
+    margin-top: 2em;
 }

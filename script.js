@@ -1,78 +1,84 @@
 const quizBtn = document.querySelector(".quiz-start-btn")
 const quizMain = document.querySelector(".quiz-main")
 const intro= document.querySelector(".intro")
-const getOption= document.querySelector(".option")
+const getOption = document.getElementById("option")
+const answerBtn = document.getElementById("answer-btn")
 
 
-// quizBtn.addEventListener("click",()=>{
-//     intro.style.display = "none"
-//     quizMain.style.display = "flex"
-// })
 
-// getOption.addEventListener("click",()=>{
-//     if (getOption.innerText=="Adios"){
-//         console.log("passed")
-//     }
-//     else{
-//         console.log("Failed")
-//     }
-// })
+quizBtn.addEventListener("click",()=>{
+    intro.style.display = "none"
+    quizMain.style.display = "flex"
+})
 
 
-// Correct answer = data.results[0].correct_answer
 
-fetch("https://opentdb.com/api.php?amount=10&type=multiple")
+
+function randomize(values) {
+    let index = values.length,
+    randomIndex;
+    
+    while (index != 0) {
+        randomIndex = Math.floor(Math.random() * index);
+        index--;
+        
+        [values[index], values[randomIndex]] = [values[randomIndex], values[index]];
+    }
+    return values;
+}
+
+fetch("https://opentdb.com/api.php?amount=5&type=multiple")
     .then(response => response.json())
     .then(function(quizData) {
-        let quizResult = quizData.results
-        let quizHtml = ""
-        
-        for (let data of quizResult){
-            let quizOption = []
-            quizOption.push(data.correct_answer)
-            for (let option of data.incorrect_answers){
-                quizOption.push(option)
-            }
-            
-            function randomize(values) {
-                let index = values.length,
-                randomIndex;
-                
-                while (index != 0) {
-                    randomIndex = Math.floor(Math.random() * index);
-                    index--;
-                    
-                    [values[index], values[randomIndex]] = [values[randomIndex], values[index]];
-                }
-                
-                return values;
-            }
-            
-            randomize(quizOption)
-            let quizOptionHtml = ""
-            for (let option in quizOption) {
-                quizOptionHtml += `
-                
-                `
-            }
+        showData(quizData)
+})
 
-            quizHtml += `
-                <section class="question" id="question">
-                    <h3 class="quiz-question">${data.question}</h3>
-                    <div class="quiz-options" id="quiz-options">
-
-                        <button class="option">${data.incorrent}</button>
-                        <button class="option">hola</button>
-                        <button class="option">Salir</button>
-                        <button class="option">walii</button>
-                    </div>
-                </section>
+function showData(quizData) {
+    let quizHtml = ""
+    quizResult = quizData.results
+    for(let i = 0; i < quizResult.length;i++){
+        let quizOptionHtml = ""
+        let quizOption = []
+        quizOption.push(quizResult[i].correct_answer)
+        for (let option in quizResult[i].incorrect_answers){
+            quizOption.push(quizResult[i].incorrect_answers[option])
+        }
+        // console.log(`Q${i+1}: This is correct ${quizResult[i].correct_answer}`)
+        for (let option in quizOption){
+            quizOptionHtml += `
+                <div>
+                    <input type="radio" id=${quizOption[option]} name="question-${i}" value=${quizOption[option]} class="option">
+                    <label for=${quizOption[option]} class="option-label">${quizOption[option]}</label>
+                </div>
             `
         }
-    })
+        quizHtml += `
+            <section class="question" id="question">
+                    <h3 class="quiz-question">${quizResult[i].question}</h3>
+                    <div class="quiz-options" id="quiz-options">
+                        ${quizOptionHtml}
+                    </div>
+                </section>
+        `
+    }
+    document.getElementById("quiz-question-container").innerHTML = quizHtml
+}
+
+// const sOption = document.getElementsByName("question-0")
+
+// function checkedOption(arr){
+//     for(let i=0; i< arr.length; i++){
+//         if(arr[i].checked) {
+//             return arr[i].value
+//         }
+//     }
+// }
+
+// answerBtn.addEventListener("click", ()=>{
+//     SelectedOption = checkedOption(sOption)
+//     console.log(SelectedOption)
+// })
 
 
-
-
-
-
+// Store the selected ans in disctionary {question-0 : selectedAnswer} format
+// Problem === Value is single word not complete
