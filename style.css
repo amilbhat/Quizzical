@@ -14,6 +14,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    margin-top: 2em;
 }
 
 .intro h1{
@@ -41,7 +42,8 @@
     display: none;     /* <----------------- */
     flex-direction: column;
     align-items: center;
-    padding: 2em 8em;
+    padding: 2em 4em;
+    height: 100%;
 }
 
 .quiz-question {
@@ -55,22 +57,25 @@
 .quiz-options {
     padding: 0 2em;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
 
 
 .option {
-    position: absolute;
-    left: -9999px;
+    visibility: hidden;
 }
 
 .option-label {
     border: 2px solid #4D5B9E;
     padding: 0.5em 2em;
-    margin-bottom: 5em;
     border-radius: 2em;
     font-weight: 600;
     font-size: 0.8rem;
+}
+
+.option-container {
+    padding: 1em;
 }
 
 input[type=radio]:checked + label{

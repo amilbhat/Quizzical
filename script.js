@@ -43,18 +43,18 @@ function showData(quizData) {
         for (let option in quizResult[i].incorrect_answers){
             quizOption.push(quizResult[i].incorrect_answers[option])
         }
-        // console.log(`Q${i+1}: This is correct ${quizResult[i].correct_answer}`)
         for (let option in quizOption){
+            // NOTE: for using "id" and "for" fix the given input 
             quizOptionHtml += `
-                <div>
-                    <input type="radio" id=${quizOption[option]} name="question-${i}" value=${quizOption[option]} class="option">
-                    <label for=${quizOption[option]} class="option-label">${quizOption[option]}</label>
+                <div class="option-container">
+                    <input type="radio" id='${quizOption[option]}' name="question-${i}" value=${quizOption[option]} class="option">
+                    <label for='${quizOption[option]}' class="option-label">${quizOption[option]}</label>
                 </div>
             `
         }
         quizHtml += `
             <section class="question" id="question">
-                    <h3 class="quiz-question">${quizResult[i].question}</h3>
+                    <h3 class="quiz-question">Q${i+1}:  ${quizResult[i].question}</h3>
                     <div class="quiz-options" id="quiz-options">
                         ${quizOptionHtml}
                     </div>
