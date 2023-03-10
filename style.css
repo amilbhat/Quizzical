@@ -38,7 +38,7 @@
 /* Quiz Page */
 
 .quiz-main {
-    display: none;               /* <----------------- */
+    display: none;     /* <----------------- */
     flex-direction: column;
     align-items: center;
     padding: 2em 8em;
@@ -59,10 +59,10 @@
 }
 
 
-/* .option {
+.option {
     position: absolute;
     left: -9999px;
-} */
+}
 
 .option-label {
     border: 2px solid #4D5B9E;
@@ -76,7 +76,7 @@
 input[type=radio]:checked + label{
     border: none;
     background-color: #D6DBF5;
-    /* box-shadow: 0 0 3px 3px #4D5B9E; */
+    box-shadow: 0 0 3px 3px #4D5B9E;
 }
 
 .answer-btn {
