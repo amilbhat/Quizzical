@@ -33,7 +33,11 @@ fetch(`https://opentdb.com/api.php?amount=${numberOfQuestions}&type=multiple`)
     .then(function(quizData) {
         showData(quizData)
 })
+    // .then(function(quizData){
+    //     display_ans(quizData)
+    // })
 
+let correctChoices=[]
 function showData(quizData) {
     let quizHtml = ""
     quizResult = quizData.results
@@ -41,6 +45,8 @@ function showData(quizData) {
         let quizOptionHtml = ""
         let quizOption = []
         quizOption.push(quizResult[i].correct_answer)
+        correctChoices.push(quizResult[i].correct_answer)
+
         for (let option in quizResult[i].incorrect_answers){
             quizOption.push(quizResult[i].incorrect_answers[option])
         }
@@ -62,7 +68,9 @@ function showData(quizData) {
         `
     }
     document.getElementById("quiz-question-container").innerHTML = quizHtml
+  
 }
+
 
 function checkedOption(arr){
     for (let i of arr){
@@ -71,12 +79,67 @@ function checkedOption(arr){
         }
     }}
 
-// Selected Answers Stored Here
+
+console.log(correctChoices)
+    // Selected Answers Stored Here
 let selectedAnswer = {}
-answerBtn.addEventListener("click", ()=>{
+answerBtn.addEventListener("click",()=>{
+    
     for (let i=0 ; i < numberOfQuestions ; i++){
         selectedAnswer[`question-${i}`] = checkedOption(document.getElementsByName(`question-${i}`))
     }
+    // ----------------------------------------------------------------
+    // This section compares the selected answers to the correct answers
+    const box=document.querySelector(".option-container")
+    const option=document.querySelector(".option")
+    const optionLabel=document.querySelector(".option-label")
+    for (let i=0 ; i < numberOfQuestions ; i++){
+            option.style.backgroundColor="#00FF00";
+            optionLabel.style.backgroundColor="#00FF00";
+        
+        if (selectedAnswer[`question-${i}`]===correctChoices[i]){
+            console.log('correct')
+            // option.style.backgroundColor="#00FF00";
+            // optionLabel.style.backgroundColor="#00FF00";
+            // change_color_green.map
 
+        }
+        else{
+            console.log('incorrect')
+            // box.style.backgroundColor="#FF0000";
+            // option.style.backgroundColor="#FF0000";
+            // optionLabel.style.backgroundColor="#FF0000";
+        }
+        // ----------------------------------------------------------------------------
+    }
+
+    console.log(selectedAnswer[`question-${2}`])
     console.log(selectedAnswer)
+    
+
+
 })
+
+// function change_color_green(){
+//     const option=document.querySelector(".option")
+//     const optionLabel=document.querySelector(".option-label")
+//     option.style.backgroundColor="#00FF00";
+//     optionLabel.style.backgroundColor="#00FF00";
+// }
+
+
+
+// Test function
+
+// const option=document.querySelector(".option")
+// const optionLabel=document.querySelector(".option-label")
+// function rr(){
+    
+//     for (let opt in option ){
+//         console.log(option)
+//         opt.style.backgroundColor="green"
+//     }
+
+
+// }
+// rr()
