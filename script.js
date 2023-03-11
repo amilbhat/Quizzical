@@ -4,6 +4,7 @@ const intro= document.querySelector(".intro")
 const getOption = document.getElementById("option")
 const answerBtn = document.getElementById("answer-btn")
 
+const numberOfQuestions = 5
 
 
 quizBtn.addEventListener("click",()=>{
@@ -26,9 +27,9 @@ function randomize(values) {
     }
     return values;
 }
-
-fetch("https://opentdb.com/api.php?amount=5&type=multiple")
-    .then(response => response.json())
+fetch(`https://opentdb.com/api.php?amount=${numberOfQuestions}&type=multiple`)
+// fetch("./sample_input.json")
+.then(response => response.json())
     .then(function(quizData) {
         showData(quizData)
 })
@@ -43,11 +44,10 @@ function showData(quizData) {
         for (let option in quizResult[i].incorrect_answers){
             quizOption.push(quizResult[i].incorrect_answers[option])
         }
-        for (let option in quizOption){
-            // NOTE: for using "id" and "for" fix the given input 
+        for (let option in quizOption){ 
             quizOptionHtml += `
                 <div class="option-container">
-                    <input type="radio" id='${quizOption[option]}' name="question-${i}" value=${quizOption[option]} class="option">
+                    <input type="radio" id='${quizOption[option]}' name="question-${i}" value='${quizOption[option]}' class="option">
                     <label for='${quizOption[option]}' class="option-label">${quizOption[option]}</label>
                 </div>
             `
@@ -64,21 +64,19 @@ function showData(quizData) {
     document.getElementById("quiz-question-container").innerHTML = quizHtml
 }
 
-// const sOption = document.getElementsByName("question-0")
+function checkedOption(arr){
+    for (let i of arr){
+        if (i.checked){
+            return i.value
+        }
+    }}
 
-// function checkedOption(arr){
-//     for(let i=0; i< arr.length; i++){
-//         if(arr[i].checked) {
-//             return arr[i].value
-//         }
-//     }
-// }
+// Selected Answers Stored Here
+let selectedAnswer = {}
+answerBtn.addEventListener("click", ()=>{
+    for (let i=0 ; i < numberOfQuestions ; i++){
+        selectedAnswer[`question-${i}`] = checkedOption(document.getElementsByName(`question-${i}`))
+    }
 
-// answerBtn.addEventListener("click", ()=>{
-//     SelectedOption = checkedOption(sOption)
-//     console.log(SelectedOption)
-// })
-
-
-// Store the selected ans in disctionary {question-0 : selectedAnswer} format
-// Problem === Value is single word not complete
+    console.log(selectedAnswer)
+})
