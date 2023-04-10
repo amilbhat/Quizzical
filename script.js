@@ -5,12 +5,14 @@ const getOption = document.getElementById("option")
 const answerBtn = document.getElementById("answer-btn")
 
 const numberOfQuestions = 5
+let correctAnswer  = {}
+let selectedAnswer = {}
 
 
-quizBtn.addEventListener("click",()=>{
-    intro.style.display = "none"
-    quizMain.style.display = "flex"
-})
+// quizBtn.addEventListener("click",()=>{
+//     intro.style.display = "none"
+//     quizMain.style.display = "flex"
+// })
 
 
 
@@ -27,8 +29,8 @@ function randomize(values) {
     }
     return values;
 }
-fetch(`https://opentdb.com/api.php?amount=${numberOfQuestions}&type=multiple`)
-// fetch("./sample_input.json")
+// fetch(`https://opentdb.com/api.php?amount=${numberOfQuestions}&type=multiple`)
+fetch("./sample_input.json")
 .then(response => response.json())
     .then(function(quizData) {
         showData(quizData)
@@ -44,12 +46,14 @@ function showData(quizData) {
     for(let i = 0; i < quizResult.length;i++){
         let quizOptionHtml = ""
         let quizOption = []
+        correctAnswer[`question-${i}`] = quizData.results[`${i}`].correct_answer
         quizOption.push(quizResult[i].correct_answer)
         correctChoices.push(quizResult[i].correct_answer)
 
         for (let option in quizResult[i].incorrect_answers){
             quizOption.push(quizResult[i].incorrect_answers[option])
         }
+        randomize(quizOption)
         for (let option in quizOption){ 
             quizOptionHtml += `
                 <div class="option-container">
@@ -80,51 +84,38 @@ function checkedOption(arr){
     }}
 
 
-console.log(correctChoices)
     // Selected Answers Stored Here
-let selectedAnswer = {}
 answerBtn.addEventListener("click",()=>{
-    
+    // Storing the selected answers in selectedAnswer Object 
     for (let i=0 ; i < numberOfQuestions ; i++){
         selectedAnswer[`question-${i}`] = checkedOption(document.getElementsByName(`question-${i}`))
     }
-    // ----------------------------------------------------------------
-    // This section compares the selected answers to the correct answers
-    const box=document.querySelector(".option-container")
-    const option=document.querySelector(".option")
-    const optionLabel=document.querySelector(".option-label")
-    for (let i=0 ; i < numberOfQuestions ; i++){
-            option.style.backgroundColor="#00FF00";
-            optionLabel.style.backgroundColor="#00FF00";
-        
-        if (selectedAnswer[`question-${i}`]===correctChoices[i]){
-            console.log('correct')
-            // option.style.backgroundColor="#00FF00";
-            // optionLabel.style.backgroundColor="#00FF00";
-            // change_color_green.map
-
-        }
-        else{
-            console.log('incorrect')
-            // box.style.backgroundColor="#FF0000";
-            // option.style.backgroundColor="#FF0000";
-            // optionLabel.style.backgroundColor="#FF0000";
-        }
-        // ----------------------------------------------------------------------------
-    }
-
-    console.log(selectedAnswer[`question-${2}`])
-    console.log(selectedAnswer)
     
-
-
+    console.log(checkAnswer(selectedAnswer, correctAnswer))
+    console.log(selectedAnswer)
+    console.log(correctAnswer)
+    
 })
 
+// Function not working
+function checkAnswer(selectedAnswer, correctAnswer) {
+    let incorrectSelected = []
+    for (let i; i < correctAnswer.length ; i++){
+        if (selectedAnswer[`question-${i}`] === correctAnswer[`question-${i}`]){
+            incorrectSelected.push(`question-${i}`)
+            incorrectSelected.push(`i`)
+        }else{
+            incorrectSelected.push("False")
+        }
+    }
+    return incorrectSelected
+}
+
 // function change_color_green(){
-//     const option=document.querySelector(".option")
-//     const optionLabel=document.querySelector(".option-label")
-//     option.style.backgroundColor="#00FF00";
-//     optionLabel.style.backgroundColor="#00FF00";
+    //     const option=document.querySelector(".option")
+    //     const optionLabel=document.querySelector(".option-label")
+    //     option.style.backgroundColor="#00FF00";
+    //     optionLabel.style.backgroundColor="#00FF00";
 // }
 
 
@@ -143,3 +134,33 @@ answerBtn.addEventListener("click",()=>{
 
 // }
 // rr()
+
+
+// ----------------------------------------------------------------
+    // // This section compares the selected answers to the correct answers
+    // const box=document.querySelector(".option-container")
+    // const option=document.querySelector(".option")
+    // const optionLabel=document.querySelector(".option-label")
+    // for (let i=0 ; i < numberOfQuestions ; i++){
+    //         option.style.backgroundColor="#00FF00";
+    //         optionLabel.style.backgroundColor="#00FF00";
+        
+    //     if (selectedAnswer[`question-${i}`]===correctChoices[i]){
+    //         console.log('correct')
+    //         // option.style.backgroundColor="#00FF00";
+    //         // optionLabel.style.backgroundColor="#00FF00";
+    //         // change_color_green.map
+    
+    //     }
+    //     else{
+    //         console.log('incorrect')
+    //         // box.style.backgroundColor="#FF0000";
+    //         // option.style.backgroundColor="#FF0000";
+    //         // optionLabel.style.backgroundColor="#FF0000";
+    //     }
+    //     // ----------------------------------------------------------------------------
+    // }
+    
+    // console.log(selectedAnswer[`question-${2}`])
+    // console.log(selectedAnswer)
+    
