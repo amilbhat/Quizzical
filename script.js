@@ -9,10 +9,10 @@ let correctAnswer  = {}
 let selectedAnswer = {}
 
 
-// quizBtn.addEventListener("click",()=>{
-//     intro.style.display = "none"
-//     quizMain.style.display = "flex"
-// })
+quizBtn.addEventListener("click",()=>{
+    intro.style.display = "none"
+    quizMain.style.display = "flex"
+})
 
 
 
@@ -111,56 +111,22 @@ function checkAnswer(selectedAnswer, correctAnswer) {
     return incorrectSelected
 }
 
-// function change_color_green(){
-    //     const option=document.querySelector(".option")
-    //     const optionLabel=document.querySelector(".option-label")
-    //     option.style.backgroundColor="#00FF00";
-    //     optionLabel.style.backgroundColor="#00FF00";
-// }
+
+// Fix Check answer 
 
 
 
-// Test function
 
-// const option=document.querySelector(".option")
-// const optionLabel=document.querySelector(".option-label")
-// function rr(){
-    
-//     for (let opt in option ){
-//         console.log(option)
-//         opt.style.backgroundColor="green"
-//     }
+// Change correct answer to green
+// Change Wrong answer to Red
+// Display Score 
+// Additional Tasks ..........
+// Add Number of questions option
 
 
-// }
-// rr()
 
 
-// ----------------------------------------------------------------
-    // // This section compares the selected answers to the correct answers
-    // const box=document.querySelector(".option-container")
-    // const option=document.querySelector(".option")
-    // const optionLabel=document.querySelector(".option-label")
-    // for (let i=0 ; i < numberOfQuestions ; i++){
-    //         option.style.backgroundColor="#00FF00";
-    //         optionLabel.style.backgroundColor="#00FF00";
-        
-    //     if (selectedAnswer[`question-${i}`]===correctChoices[i]){
-    //         console.log('correct')
-    //         // option.style.backgroundColor="#00FF00";
-    //         // optionLabel.style.backgroundColor="#00FF00";
-    //         // change_color_green.map
-    
-    //     }
-    //     else{
-    //         console.log('incorrect')
-    //         // box.style.backgroundColor="#FF0000";
-    //         // option.style.backgroundColor="#FF0000";
-    //         // optionLabel.style.backgroundColor="#FF0000";
-    //     }
-    //     // ----------------------------------------------------------------------------
-    // }
-    
-    // console.log(selectedAnswer[`question-${2}`])
-    // console.log(selectedAnswer)
-    
+
+
+
+
