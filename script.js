@@ -79,7 +79,7 @@ function showData(quizData) {
 function checkedOption(arr){
     for (let i of arr){
         if (i.checked){
-            return i.value
+            return i
         }
     }}
 
@@ -88,33 +88,28 @@ function checkedOption(arr){
 answerBtn.addEventListener("click",()=>{
     // Storing the selected answers in selectedAnswer Object 
     for (let i=0 ; i < numberOfQuestions ; i++){
-        selectedAnswer[`question-${i}`] = checkedOption(document.getElementsByName(`question-${i}`))
+        selectedAnswer[`question-${i}`] = checkedOption(document.getElementsByName(`question-${i}`)).value
     }
     
-    console.log(checkAnswer(selectedAnswer, correctAnswer))
+    checkAnswer()
+    document.getElementById(selectedAnswer["question-1"]).style.color = "red"
     console.log(selectedAnswer)
-    console.log(correctAnswer)
+    // console.log(correctAnswer)
     
 })
 
-// Function not working
-function checkAnswer(selectedAnswer, correctAnswer) {
-    let incorrectSelected = []
-    for (let i; i < correctAnswer.length ; i++){
-        if (selectedAnswer[`question-${i}`] === correctAnswer[`question-${i}`]){
-            incorrectSelected.push(`question-${i}`)
-            incorrectSelected.push(`i`)
-        }else{
-            incorrectSelected.push("False")
+function checkAnswer() {
+    for (let i=0;i < numberOfQuestions; i++){
+        if (correctAnswer[`question-${i}`] === selectedAnswer[`question-${i}`]){
+            console.log("Correct")
+        }else {
+            console.log(`Incorrect`)
         }
     }
-    return incorrectSelected
+    
 }
 
-
-// Fix Check answer 
-
-
+// 
 
 
 // Change correct answer to green
@@ -122,7 +117,7 @@ function checkAnswer(selectedAnswer, correctAnswer) {
 // Display Score 
 // Additional Tasks ..........
 // Add Number of questions option
-
+// Disable question selection after submission
 
 
 
