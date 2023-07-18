@@ -37,6 +37,12 @@
     background-color: #4D5B9E;
 }
 
+.quiz-description {
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    
+}
+
 /* Quiz Page */
 
 .quiz-main {

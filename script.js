@@ -11,8 +11,20 @@ let selectedAnswer = {}
 let score = 0
 
 quizBtn.addEventListener("click",()=>{
-    intro.style.display = "none"
-    quizMain.style.display = "flex"
+    quizBtn.disabled = "true";
+    setTimeout(()=> {
+        intro.style.display = "none"
+        quizMain.style.display = "flex"
+    }, 1000)
+
+    fetch(`https://opentdb.com/api.php?amount=${numberOfQuestions}&type=multiple`)
+    .then(response => response.json())
+    .then(function(quizData) {
+            showData(quizData)
+    })
+    .catch ((error) => {
+        alert(`Ther was an error: \n${error}`)
+    })
 })
 
 
@@ -31,14 +43,7 @@ function randomize(values) {
     return values;
 }
 
-fetch(`https://opentdb.com/api.php?amount=${numberOfQuestions}&type=multiple`)
-.then(response => response.json())
-.then(function(quizData) {
-        showData(quizData)
-})
-    // .then(function(quizData){
-    //     display_ans(quizData)
-    // })
+
 
 let correctChoices=[]
 function showData(quizData) {
@@ -89,11 +94,16 @@ function checkedOption(arr){
     // Selected Answers Stored Here
 answerBtn.addEventListener("click",()=>{
     // Storing the selected answers in selectedAnswer Object 
-    for (let i=0 ; i < numberOfQuestions ; i++){
-        selectedAnswer[`question-${i}`] = checkedOption(document.getElementsByName(`question-${i}`)).value
-    }
+    try{
+            for (let i=0 ; i < numberOfQuestions ; i++){
+                selectedAnswer[`question-${i}`] = checkedOption(document.getElementsByName(`question-${i}`)).value
+            }
+            checkAnswer()
+        }
+        catch(err) {
+            alert("Make Sure to select all options")
+        }
     
-    checkAnswer()
     
 })
 
@@ -114,6 +124,7 @@ function calculateScore(score) {
     scoreBoard.innerHTML=`
         <p id="score">Your Score is ${score} out of 5 </p>
         <button class = "retry-btn"><a href="./index.html">Retry</a></button>`
+    quizBtn.disabled = "false";
 }
 
 
