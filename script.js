@@ -1,5 +1,6 @@
 const quizBtn = document.querySelector(".quiz-start-btn")
 const quizMain = document.querySelector(".quiz-main")
+const scoreBoard = document.querySelector(".scoreboard")
 const intro= document.querySelector(".intro")
 const getOption = document.getElementById("option")
 const answerBtn = document.getElementById("answer-btn")
@@ -7,7 +8,7 @@ const answerBtn = document.getElementById("answer-btn")
 const numberOfQuestions = 5
 let correctAnswer  = {}
 let selectedAnswer = {}
-
+let score = 0
 
 quizBtn.addEventListener("click",()=>{
     intro.style.display = "none"
@@ -16,7 +17,7 @@ quizBtn.addEventListener("click",()=>{
 
 
 
-
+// Option Randomize
 function randomize(values) {
     let index = values.length,
     randomIndex;
@@ -29,10 +30,10 @@ function randomize(values) {
     }
     return values;
 }
-// fetch(`https://opentdb.com/api.php?amount=${numberOfQuestions}&type=multiple`)
-fetch("./sample_input.json")
+
+fetch(`https://opentdb.com/api.php?amount=${numberOfQuestions}&type=multiple`)
 .then(response => response.json())
-    .then(function(quizData) {
+.then(function(quizData) {
         showData(quizData)
 })
     // .then(function(quizData){
@@ -58,7 +59,7 @@ function showData(quizData) {
             quizOptionHtml += `
                 <div class="option-container">
                     <input type="radio" id='${quizOption[option]}' name="question-${i}" value='${quizOption[option]}' class="option">
-                    <label for='${quizOption[option]}' class="option-label">${quizOption[option]}</label>
+                    <label for='${quizOption[option]}' class="option-label ${quizOption[option]}">${quizOption[option]}</label>
                 </div>
             `
         }
@@ -81,7 +82,8 @@ function checkedOption(arr){
         if (i.checked){
             return i
         }
-    }}
+    }
+}
 
 
     // Selected Answers Stored Here
@@ -92,32 +94,32 @@ answerBtn.addEventListener("click",()=>{
     }
     
     checkAnswer()
-    document.getElementById(selectedAnswer["question-1"]).style.color = "red"
-    console.log(selectedAnswer)
-    // console.log(correctAnswer)
     
 })
 
 function checkAnswer() {
     for (let i=0;i < numberOfQuestions; i++){
         if (correctAnswer[`question-${i}`] === selectedAnswer[`question-${i}`]){
-            console.log("Correct")
+            score++;
+            document.getElementsByClassName(checkedOption(document.getElementsByName(`question-${i}`)).value)[0].setAttribute("id", "correct");
         }else {
-            console.log(`Incorrect`)
+            document.getElementsByClassName(checkedOption(document.getElementsByName(`question-${i}`)).value)[0].setAttribute("id", "incorrect");
         }
     }
-    
+    calculateScore(score)
 }
 
-// 
+function calculateScore(score) {
+    scoreBoard.style.display = "flex";
+    scoreBoard.innerHTML=`
+        <p id="score">Your Score is ${score} out of 5 </p>
+        <button class = "retry-btn"><a href="./index.html">Retry</a></button>`
+}
 
 
-// Change correct answer to green
-// Change Wrong answer to Red
-// Display Score 
-// Additional Tasks ..........
-// Add Number of questions option
-// Disable question selection after submission
+
+
+
 
 
 
