@@ -17,7 +17,7 @@ quizBtn.addEventListener("click",()=>{
         quizMain.style.display = "flex"
     }, 1000)
 
-    fetch(`https://opentdb.com/api.php?amount=${numberOfQuestions}&type=multiple`)
+    fetch(`https://opentdb.com/api.php?amount=${numberOfQuestions}&difficulty=easy&type=multiple`)
     .then(response => response.json())
     .then(function(quizData) {
             showData(quizData)
