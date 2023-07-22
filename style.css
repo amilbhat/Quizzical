@@ -147,3 +147,14 @@ input[type=radio]:checked + label{
     color: #fff;
     text-decoration: none;
 }
+
+@media screen and (max-width: 512px) {
+    .quiz-main {
+        padding: 1em;
+    }
+
+    .quiz-options {
+        padding: 0em;
+        flex-direction: column;
+    }
+}
